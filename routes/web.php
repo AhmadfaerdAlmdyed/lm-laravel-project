@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\HosptialController;
+use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('admin.dashboard');
+    return view('admin.home');
 });
 
 // Route::prefix('admin')->group(function(){
@@ -32,11 +32,11 @@ Route::get('/', function () {
 // Route::get('/welcome', 'WelcomeController@welcome');
 // Route::get('/welcome' , [WelcomeController::class , 'welcome']);
 
-Route::fallback(function(){
+
+Route::resource('hospitals', HospitalController::class);
+Route::fallback(function () {
     return view('error404');
 });
-Route::resource('hospitals', HosptialController::class);
-
 
 // /*
 //  WelcomeController@welcome

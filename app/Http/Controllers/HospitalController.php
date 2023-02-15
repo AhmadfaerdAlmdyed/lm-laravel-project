@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Hospital;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class HosptialController extends Controller
+class HospitalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,21 +14,8 @@ class HosptialController extends Controller
      */
     public function index()
     {
-        // DB Builder
-        // $data = DB::table('hospitals')->get();
-        // foreach($data as $hospital){
-        //     echo "<pre>";
-        //     var_dump($hospital);
-        //     echo "</pre>";
-        // }
-         ///////// Model
-         $data = Hospital::get();
-          foreach($data as $hospital){
-            echo "<pre>";
-            var_dump($hospital);
-            echo "</pre>";
-        }
-
+        $data = Hospital::all();
+        return view('admin.hospitals.index',compact('data'));
     }
 
     /**
@@ -39,25 +25,7 @@ class HosptialController extends Controller
      */
     public function create()
     {
-        // return form for register hospital
-        // query builder
-    //    $satuts = DB::table('hospitals')->insert([
-    //         'name'=> 'yhaya2',
-    //         'location' => 'gaza',
-    //         'is_active' => true,
-    //         'created_at' => now(),
-    //         'updated_at' => now(),
-    //     ]);
-    //     return  $satuts  ? 'created Succefully' : 'Eroorrrrrrrrr';
-        // Elqouent :
-        // $hospital = new Hospital();
-        // $hospital->name = "ali";
-        // $hospital->location ="rafah";
-        // $hospital->is_active = true;
-        // $hospital->save();
-        // return "success";
-        // $name = "aaa"
-        // DB::insert('insert into users (id, name) values (?, ?)', [1, 'Dayle']);
+        //
     }
 
     /**
@@ -68,7 +36,7 @@ class HosptialController extends Controller
      */
     public function store(Request $request)
     {
-        //store hospitla
+        //
     }
 
     /**
@@ -79,7 +47,6 @@ class HosptialController extends Controller
      */
     public function show($id)
     {
-        //show single elemet
         //
     }
 
