@@ -5,7 +5,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title mt-2">Hospitals Table</h3>
-                <a href="{{ route('hospitals.create') }}" class="btn btn-success float-right">Success</a>
+                <a href="{{ route('hospitals.create') }}" class="btn btn-success float-right">new hospital</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -32,10 +32,11 @@
                                 <td>{{ $hospital->updated_at }}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-info">Edit</button>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-info">edit</button>
+                                            <button type="button" class="btn btn-danger">delete</button>
+                                        </div>
 
-                                     <a href="{{ route('hospitals.destroy', $hospital->id) }}" class="btn btn-danger">delete</a>
-                                    </form>
                                     </div>
                                 </td>
                             </tr>
