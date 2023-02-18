@@ -19,6 +19,7 @@ class CreateHospitalsTable extends Migration
             $table->string('location');
             $table->text('info')->nullable();
             $table->boolean('is_active');
+            $table->string('cover')->nullable();
             $table->timestamps();
         });
     }
