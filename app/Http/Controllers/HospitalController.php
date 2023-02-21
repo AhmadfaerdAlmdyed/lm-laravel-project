@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Hospital;
 // use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
 class HospitalController extends Controller
@@ -51,12 +53,16 @@ class HospitalController extends Controller
         $hospital->location = $request->get('location');
         $hospital->info = $request->get('info');
         if ($request->has('cover')) {
-            $hospital->cover = $request->file('cover')->store('uploads/hospitals');
+            $image = $request->file('cover');
+            $imagename = time().$hospital->name.'.'. $image->getClientOriginalExtension();
+            $request->file('cover')->storePubliclyAs('hospitals', $imagename , ['disk'=>'public']);
+            $hospital->cover = $imagename;
         }
         $hospital->is_active = $request->has('is_active');
         $saved = $hospital->save();
         if ($saved) {
-            return redirect()->back();
+            session()->flash('message','hospital created successfuly');
+            return redirect()->route('hospitals.index');
         }
     }
 
@@ -79,7 +85,8 @@ class HospitalController extends Controller
      */
     public function edit($id)
     {
-        //
+        $hospital = Hospital::find($id);
+        return view('admin.hospitals.edit',compact('hospital'));
     }
 
     /**
@@ -91,7 +98,30 @@ class HospitalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'location' => 'required|string',
+            'info' => 'nullable|string',
+            'is_active' => 'in:on|string',
+            'cover' => 'nullable|image|mimes:jpg,png'
+
+        ]);
+        $hospital= Hospital::find($id);
+        $hospital->name = $request->get('name');
+        $hospital->location = $request->get('location');
+        $hospital->info = $request->get('info');
+        if ($request->has('cover')) {
+            $image = $request->file('cover');
+            $imagename = time().$hospital->name.'.'. $image->getClientOriginalExtension();
+            $request->file('cover')->storePubliclyAs('hospitals', $imagename , ['disk'=>'public']);
+            $hospital->cover = $imagename;
+        }
+        $hospital->is_active = $request->has('is_active');
+        $saved = $hospital->save();
+        if ($saved) {
+            session()->flash('message','hospital updated successfuly');
+            return redirect()->route('hospitals.index');
+        }
     }
 
     /**
@@ -104,8 +134,10 @@ class HospitalController extends Controller
     {
 
         $item = Hospital::find($id);
+        Storage::disk('public')->delete("hospitals/$item->cover");
         $deleted = $item->delete();
         if ($deleted) {
+            session()->flash('message', 'hospital deleted successfuly');
             return redirect()->back();
         } else {
             return 'error';
