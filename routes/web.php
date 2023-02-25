@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HospitalController;
+use App\Http\Controllers\MajorController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,7 @@ Route::get('/', function () {
 
 
 Route::resource('hospitals', HospitalController::class);
+Route::resource('majors' , MajorController::class);
 Route::fallback(function () {
     return view('error404');
 });

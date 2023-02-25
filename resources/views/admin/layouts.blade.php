@@ -14,6 +14,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{ asset('cms/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Theme style -->
+  <link rel="stylesheet" href="{{ asset('cms/plugins/toastr/toastr.min.css') }}">
+  <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('cms/dist/css/adminlte.min.css') }}">
   @yield('css')
 </head>
@@ -195,13 +197,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          
+
            {{-- Hospitals --}}
             <li class="nav-item">
             <a href="{{ route('hospitals.index') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Hospitals
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+             <li class="nav-item">
+            <a href="{{ route('majors.index') }}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Majors
                 <span class="right badge badge-danger">New</span>
               </p>
             </a>
@@ -274,8 +285,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{ asset('cms/plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('cms/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('cms/plugins/toastr/toastr.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('cms/dist/js/adminlte.min.js') }}"></script>
+<script src="{{ asset('js/axios.js') }}"></script>
 @yield('script')
 </body>
 </html>
