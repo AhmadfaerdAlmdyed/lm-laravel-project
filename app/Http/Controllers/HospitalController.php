@@ -46,7 +46,6 @@ class HospitalController extends Controller
             'info' => 'nullable|string',
             'is_active' => 'in:on|string',
             'cover' => 'nullable|image|mimes:jpg,png'
-
         ]);
         $hospital = new Hospital();
         $hospital->name = $request->get('name');

@@ -8,7 +8,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form enctype="multipart/form-data" id="form-rest">
+            <form method="POST" id="form-rest">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
@@ -35,7 +35,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <a  onclick="storeItem('/majors')" class="btn btn-primary">Submit</a>
+                    <a  onclick="storeItem('/majors/')" class="btn btn-primary">Submit</a>
                 </div>
             </form>
         </div>
@@ -45,20 +45,21 @@
 @section('script')
 <script>
  function storeItem(url){
-    // let data ={
-    //     name : document.getElementById('name').value
-
-    // }
-    // let formData = new FormData();
-    // formData.append('name' ,'yahya');
-
+    let formData = new FormData();
+    formData.append('name' ,document.getElementById('name').value);
+    if(document.getElementById('cover').files[0] != undefined){
+        formData.append('cover' ,document.getElementById('cover').files[0]);
+    }
+    formData.append('is_active' ,document.getElementById('customSwitch1').checked);
     axios.post(url ,formData)
-    .then(function(responce){
-        toastr.success('Created Successfully')
-        console.log(responce.data)
+    .then(function(response){
+        toastr.success(response.data.message)
+        document.getElementById('form-rest').reset()
+        // window.location.href = '/majors'
+        console.log(response.data)
     }).catch(function(error){
-        toastr.error('error')
-        console.log(error)
+        console.log(error.response.data.message)
+        toastr.error(error.response.data.message)
     })
 
  }

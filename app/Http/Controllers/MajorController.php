@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Major;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 class MajorController extends Controller
 {
@@ -36,7 +38,31 @@ class MajorController extends Controller
      */
     public function store(Request $request)
     {
-       return response()->json(['message'=> 'created Successfully']);
+        $Validator = Validator($request->all(), [
+            'name' => 'required|string',
+            'is_active' => 'in:true,flase|string',
+            'cover' => 'nullable|image|mimes:jpg,png'
+        ]);
+        if (!$Validator->fails()) {
+            $major = new Major();
+            $major->name = $request->get('name');
+            if ($request->has('cover')) {
+                $image = $request->file('cover');
+                $imagename = time() . $major->name . '.' . $image->getClientOriginalExtension();
+                $request->file('cover')->storePubliclyAs('majors', $imagename, ['disk' => 'public']);
+                $major->cover = $imagename;
+            }
+            $major->is_active = $request->has('is_active');
+            $saved = $major->save();
+            return response()->json([
+                    'message' => $saved ? 'Major created successfully' : 'Fail creating major'
+            ],$saved ? Response::HTTP_OK:Response::HTTP_BAD_REQUEST
+        );
+        }else{
+            return response()->json([
+                'message' => $Validator->getMessageBag()->first()
+            ], Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -58,7 +84,7 @@ class MajorController extends Controller
      */
     public function edit(Major $major)
     {
-        //
+        return view('admin.majors.edit',compact('major'));
     }
 
     /**
@@ -70,7 +96,32 @@ class MajorController extends Controller
      */
     public function update(Request $request, Major $major)
     {
-        //
+        $Validator = Validator($request->all(), [
+            'name' => 'required|string',
+            'is_active' => 'in:true,flase|string',
+            'cover' => 'nullable|image|mimes:jpg,png'
+        ]);
+        if (!$Validator->fails()) {
+            $major->name = $request->get('name');
+            if ($request->has('cover')) {
+                $image = $request->file('cover');
+                $imagename = time() . $major->name . '.' . $image->getClientOriginalExtension();
+                $request->file('cover')->storePubliclyAs('majors', $imagename, ['disk' => 'public']);
+                $major->cover = $imagename;
+            }
+            $major->is_active = $request->has('is_active');
+            $saved = $major->save();
+            return response()->json(
+                [
+                    'message' => $saved ? 'Major updated successfully' : 'Fail updating major'
+                ],
+                $saved ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST
+            );
+        } else {
+            return response()->json([
+                'message' => $Validator->getMessageBag()->first()
+            ], Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -81,6 +132,13 @@ class MajorController extends Controller
      */
     public function destroy(Major $major)
     {
-        //
+        $deleted = $major->delete();
+        return response()->json(
+            [
+                'message' => $deleted ? 'Major deleted successfully' : 'Fail deleting major',
+                'icon' => $deleted ? 'success' : 'dengar'
+            ],
+            $deleted ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST
+        );
     }
 }

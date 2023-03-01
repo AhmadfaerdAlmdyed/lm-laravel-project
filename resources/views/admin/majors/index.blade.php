@@ -1,6 +1,7 @@
 @extends('admin.layouts')
 @section('css')
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 @endsection
 @section('title', 'majors')
 @section('content')
@@ -41,16 +42,13 @@
                                             <a href="{{ route('majors.edit', $major->id) }}" class="btn btn-info"><i
                                                     class="fas fa-edit"></i></a>
                                             {{-- ---------------------- --}}
-                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                            {{-- <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal">
-                                                <i class="fab fa-elementor"></i></button>
+                                                <i class="fab fa-elementor"></i></button> --}}
                                             {{-- ------------------------------------ --}}
-                                            <form action="{{ route('majors.destroy', $major->id) }}" method="POST">
-                                                @csrf
-                                                @method('delete')
-                                                <button type="submit" class="btn btn-danger"><i
-                                                        class="fas fa-trash"></i></button>
-                                            </form>
+                                            <button onclick="deleteItem('/majors/' , this , {{ $major->id }})"
+                                                class="btn btn-danger"><i class="fas fa-trash"></i></button>
+
                                         </div>
 
                                     </div>
@@ -93,5 +91,38 @@
     </div>
 @endsection
 @section('script')
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script>
+        function deleteItem(url, ref, id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete(url+id)
+                    .then(function(response){
+                        showMessage(response.data)
+                        ref.closest('tr').remove()
+                    }).catch(function(error){
+                        showMessage(error.response.data)
+                    })
+                }
+            })
+        }
+
+        function showMessage(data) {
+            Swal.fire({
+                    icon: data.icon,
+                    title: data.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                }
+            )
+        }
+    </script>
+
 @endsection
