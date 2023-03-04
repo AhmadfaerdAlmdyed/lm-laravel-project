@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hospital;
+use App\Models\Major;
 // use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +30,8 @@ class HospitalController extends Controller
      */
     public function create()
     {
-        return view('admin.hospitals.create');
+        $majors = Major::all();
+        return view('admin.hospitals.create',compact('majors'));
     }
 
     /**
@@ -59,6 +61,7 @@ class HospitalController extends Controller
         }
         $hospital->is_active = $request->has('is_active');
         $saved = $hospital->save();
+        $hospital->majors()->attach($request->get('majors'));
         if ($saved) {
             session()->flash('message','hospital created successfuly');
             return redirect()->route('hospitals.index');

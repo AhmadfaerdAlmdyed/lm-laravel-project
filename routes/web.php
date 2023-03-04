@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\WelcomeController;
@@ -36,6 +37,7 @@ Route::get('/', function () {
 
 Route::resource('hospitals', HospitalController::class);
 Route::resource('majors' , MajorController::class);
+Route::resource('doctors', DoctorController::class);
 Route::fallback(function () {
     return view('error404');
 });

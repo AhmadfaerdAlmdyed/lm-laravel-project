@@ -1,14 +1,14 @@
 @extends('admin.layouts')
-@section('title', 'new hospital')
+@section('title', 'new doctor')
 @section('content')
     <div class="col-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Quick Example</h3>
+                <h3 class="card-title">Create new doctor</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form action="{{ route('hospitals.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('doctors.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
                     @if ($errors->any())
@@ -20,12 +20,13 @@
                             @endforeach
                         </div>
                     @endif
-                    <div class="form-group" data-select2-id="28">
-                        <label>Multiple</label>
-                        <select class="select2 select2-hidden-accessible" multiple="" data-placeholder="Select a State"
-                            style="width: 100%;" data-select2-id="6" tabindex="-1" aria-hidden="true" name="majors[]">
-                            @foreach ($majors as $major)
-                                <option value="{{ $major->id }}">{{ $major->name }}</option>
+                    <div class="form-group" data-select2-id="34">
+                        <label>select hospital</label>
+                        <select class="form-control select2 select2-danger select2-hidden-accessible"
+                            data-dropdown-css-class="select2-info" style="width: 100%;" data-select2-id="11" tabindex="-1"
+                            aria-hidden="true">
+                            @foreach ($hospitals as $hospital)
+                                <option name="hospital_id" value="{{ $hospital->id }}">{{ $hospital->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -35,9 +36,14 @@
                             value="{{ old('name') }}">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Enter location</label>
-                        <input type="text" name="location" class="form-control" id="exampleInputPassword1"
-                            placeholder="location" value="{{ old('location') }}">
+                        <label for="exampleInputEmail1">Enter email</label>
+                        <input type="text" name="email" class="form-control" id="exampleInputEmail1"
+                            placeholder="email" value="{{ old('email') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Enter phone</label>
+                        <input type="text" name="phone" class="form-control" id="exampleInputPassword1"
+                            placeholder="phone" value="{{ old('phone') }}">
                     </div>
                     <div class="form-group">
                         <label>Descrption</label>

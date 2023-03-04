@@ -16,9 +16,9 @@ class CreateHospitalMajorTable extends Migration
         Schema::create('hospital_major', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('hospital_id');
-            $table->foreign('hospital_id')->on('hospitals')->references('id');
+            $table->foreign('hospital_id')->on('hospitals')->references('id')->cascadeOnDelete();
             $table->unsignedBigInteger('major_id');
-            $table->foreign('major_id')->on('majors')->references('id');
+            $table->foreign('major_id')->on('majors')->references('id')->cascadeOnDelete();
             $table->timestamps();
         });
     }

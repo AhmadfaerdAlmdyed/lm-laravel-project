@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMajorsTable extends Migration
+class CreateDoctorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,15 @@ class CreateMajorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('majors', function (Blueprint $table) {
+        Schema::create('doctors', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('email')->unique();
+            $table->string('phone')->unique();
             $table->string('cover')->nullable();
-            $table->boolean('is_active');
+            $table->string('descrption')->nullable();
+            $table->unsignedBigInteger('hospital_id')->nullable();
+            $table->foreign('hospital_id')->on('hospitals')->references('id')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ class CreateMajorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('majors');
+        Schema::dropIfExists('doctors');
     }
 }
