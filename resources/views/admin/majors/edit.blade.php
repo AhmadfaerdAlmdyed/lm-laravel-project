@@ -52,10 +52,10 @@
                 formData.append('cover', document.getElementById('cover').files[0]);
             }
             formData.append('is_active', document.getElementById('customSwitch1').checked);
-            axios.post('/majors/'+id, formData)
+            axios.post('/admin/majors/'+id, formData)
                 .then(function(response) {
                     toastr.success(response.data.message)
-                    window.location.href = '/majors'
+                    window.location.href = '/admin/majors'
                     console.log(response.data)
                 }).catch(function(error) {
                     console.log(error.response.data.message)

@@ -50,9 +50,9 @@
                                             <a href="{{ route('hospitals.edit', $hospital->id) }}" class="btn btn-info"><i
                                                     class="fas fa-edit"></i></a>
                                             {{-- ---------------------- --}}
-                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                            {{-- <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal">
-                                                <i class="fab fa-elementor"></i></button>
+                                                <i class="fab fa-elementor"></i></button> --}}
                                             {{-- ------------------------------------ --}}
                                             <form action="{{ route('hospitals.destroy', $hospital->id) }}" method="POST">
                                                 @csrf

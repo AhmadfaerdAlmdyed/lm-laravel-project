@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\FrontEndController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\WelcomeController;
@@ -17,9 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('admin.home');
-});
+
 
 // Route::prefix('admin')->group(function(){
 //     Route::get('/hosptial/index', [HosptialController::class, 'index'])->name('hospital.index');
@@ -33,30 +33,31 @@ Route::get('/', function () {
 
 // Route::get('/welcome', 'WelcomeController@welcome');
 // Route::get('/welcome' , [WelcomeController::class , 'welcome']);
+// Route::get('/', function () {
+//     return view('admin.home');
+// })->name('admin.home');
 
 
-Route::resource('hospitals', HospitalController::class);
-Route::resource('majors' , MajorController::class);
-Route::resource('doctors', DoctorController::class);
+Route::prefix('admin/')->middleware('auth')->group(function(){
+    Route::get('home', [AuthController::class, 'dashbord'])->name('admin.home');
+    Route::resource('hospitals', HospitalController::class);
+    Route::resource('majors', MajorController::class);
+    Route::resource('doctors', DoctorController::class);
+    Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
+    Route::get('change-password', [AuthController::class, 'changePassword'])->name('admin.change-password');
+    Route::post('change-password', [AuthController::class, 'psotPassword'])->name('admin.post-change');
+
+});
+Route::prefix('admin/')->middleware('guest')->group(function () {
+    Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
+    Route::get('login', [AuthController::class, 'login'])->name('admin.login');
+});
+
+
 Route::fallback(function () {
     return view('error404');
 });
 
-// /*
-//  WelcomeController@welcome
-// */
-// // Route::post();
-// // Route::delete();
-// /*
-// get
-// post
-// put
-// patch
-// delete
-// options
-// head
-// */
-
-// /*
-// model binding
-// attribute binging
+//
+////////////////////////////// Front End Routes
+Route::get('/',[FrontEndController::class,'home'])->name('home');

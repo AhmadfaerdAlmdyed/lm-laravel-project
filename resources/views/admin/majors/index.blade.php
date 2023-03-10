@@ -46,7 +46,7 @@
                                                 data-bs-target="#exampleModal">
                                                 <i class="fab fa-elementor"></i></button> --}}
                                             {{-- ------------------------------------ --}}
-                                            <button onclick="deleteItem('/majors/' , this , {{ $major->id }})"
+                                            <button onclick="deleteItem('/admin/majors/' , this , {{ $major->id }})"
                                                 class="btn btn-danger"><i class="fas fa-trash"></i></button>
 
                                         </div>

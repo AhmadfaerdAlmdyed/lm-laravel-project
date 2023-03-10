@@ -8,7 +8,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title mt-2">doctors Table</h3>
-                <a href="{{ route('doctors.create') }}" class="btn btn-success float-right">new hospital</a>
+                <a href="{{ route('doctors.create') }}" class="btn btn-success float-right">new doctor</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -27,7 +27,7 @@
                             <th>Name</th>
                             <th>email</th>
                             <th>phone</th>
-                            <th>Active</th>
+
                             <th>Image</th>
                             <th>Create Date</th>
                             <th>Update Date</th>
@@ -35,27 +35,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data as $hospital)
+                        @foreach ($data as $doctor)
                             <tr>
-                                <td>{{ $hospital->id }}</td>
-                                <td>{{ $hospital->name }}</td>
-                                <td>{{ $hospital->location }}</td>
-                                <td><span class="brdge {{ $hospital->is_active ? 'bg-success' : 'bg-danger' }}">{{ $hospital->active_status }}</span></td>
-                                <td><img src="{{ Storage::url('doctors/' . $hospital->cover) }}" alt="hospital image"
+                                <td>{{ $doctor->id }}</td>
+                                <td>{{ $doctor->name }}</td>
+                                <td>{{ $doctor->email }}</td>
+                                 <td>{{ $doctor->phone }}</td>
+                                {{-- <td><span class="brdge {{ $doctor->is_active ? 'bg-success' : 'bg-danger' }}">{{ $doctor->active_status }}</span></td> --}}
+                                <td><img src="{{ Storage::url('doctors/' . $doctor->cover) }}" alt="doctor image"
                                         width="60" height="60"></td>
-                                <td>{{ $hospital->created_at }}</td>
-                                <td>{{ $hospital->updated_at }}</td>
+                                <td>{{ $doctor->created_at }}</td>
+                                <td>{{ $doctor->updated_at }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <div class="btn-group">
-                                            <a href="{{ route('doctors.edit', $hospital->id) }}" class="btn btn-info"><i
+                                            <a href="{{ route('doctors.edit', $doctor->id) }}" class="btn btn-info"><i
                                                     class="fas fa-edit"></i></a>
                                             {{-- ---------------------- --}}
-                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                            {{-- <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal">
-                                                <i class="fab fa-elementor"></i></button>
+                                                <i class="fab fa-elementor"></i></button> --}}
                                             {{-- ------------------------------------ --}}
-                                            <form action="{{ route('doctors.destroy', $hospital->id) }}" method="POST">
+                                            <form action="{{ route('doctors.destroy', $doctor->id) }}" method="POST">
                                                 @csrf
                                                 @method('delete')
                                                 <button type="submit" class="btn btn-danger"><i

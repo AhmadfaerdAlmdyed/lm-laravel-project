@@ -4,7 +4,7 @@
     <div class="col-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Quick Example</h3>
+                <h3 class="card-title">Create Hospital</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -21,7 +21,7 @@
                         </div>
                     @endif
                     <div class="form-group" data-select2-id="28">
-                        <label>Multiple</label>
+                        <label>Enter hospitals majors</label>
                         <select class="select2 select2-hidden-accessible" multiple="" data-placeholder="Select a State"
                             style="width: 100%;" data-select2-id="6" tabindex="-1" aria-hidden="true" name="majors[]">
                             @foreach ($majors as $major)

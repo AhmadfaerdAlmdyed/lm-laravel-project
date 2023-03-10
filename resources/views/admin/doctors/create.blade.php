@@ -24,9 +24,9 @@
                         <label>select hospital</label>
                         <select class="form-control select2 select2-danger select2-hidden-accessible"
                             data-dropdown-css-class="select2-info" style="width: 100%;" data-select2-id="11" tabindex="-1"
-                            aria-hidden="true">
+                            aria-hidden="true" name="hospital_id">
                             @foreach ($hospitals as $hospital)
-                                <option name="hospital_id" value="{{ $hospital->id }}">{{ $hospital->name }}</option>
+                                <option value="{{ $hospital->id }}">{{ $hospital->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -42,12 +42,12 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Enter phone</label>
-                        <input type="text" name="phone" class="form-control" id="exampleInputPassword1"
+                        <input type="number" name="phone" class="form-control" id="exampleInputPassword1"
                             placeholder="phone" value="{{ old('phone') }}">
                     </div>
                     <div class="form-group">
                         <label>Descrption</label>
-                        <textarea class="form-control" name="info" rows="3" placeholder="Enter your descrption"></textarea>
+                        <textarea class="form-control" name="descrption" rows="3" placeholder="Enter your descrption"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputFile">Upload image</label>
@@ -58,12 +58,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <div class="custom-control custom-switch">
                             <input type="checkbox" name="is_active" class="custom-control-input" id="customSwitch1" checked>
                             <label class="custom-control-label" for="customSwitch1">Activate</label>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <!-- /.card-body -->
 
@@ -79,7 +79,6 @@
         $(function() {
             // $('.select2').select2()
             $('.select2').select2({
-                majors: true,
                 theme: 'bootstrap4'
             })
         })

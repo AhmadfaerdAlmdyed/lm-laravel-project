@@ -35,7 +35,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <a  onclick="storeItem('/majors/')" class="btn btn-primary">Submit</a>
+                    <a  onclick="storeItem('/admin/majors/')" class="btn btn-primary">Submit</a>
                 </div>
             </form>
         </div>
