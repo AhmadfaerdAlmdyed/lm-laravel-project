@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Doctor;
 use App\Models\Hospital;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use PhpParser\Comment\Doc;
 
 class DoctorController extends Controller
@@ -86,7 +87,8 @@ class DoctorController extends Controller
      */
     public function edit(Doctor $doctor)
     {
-        //
+        $hospitals = Hospital::all();
+        return view('admin.doctors.edit',compact('doctor','hospitals'));
     }
 
     /**
@@ -98,7 +100,31 @@ class DoctorController extends Controller
      */
     public function update(Request $request, Doctor $doctor)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'hospital_id' => 'required',
+            'email' => 'required|string',
+            'phone' => 'required|string|min:9',
+            'descrption' => 'nullable|string',
+            'cover' => 'nullable|image|mimes:jpg,png'
+        ]);
+        $doctor->name = $request->get('name');
+        $doctor->hospital_id = $request->get('hospital_id');
+        $doctor->email = $request->get('email');
+        $doctor->phone = $request->get('phone');
+        $doctor->descrption = $request->get('descrption');
+        if ($request->has('cover')) {
+            $image = $request->file('cover');
+            $imagename = time() . $doctor->name . '.' . $image->getClientOriginalExtension();
+            $request->file('cover')->storePubliclyAs('doctors', $imagename, ['disk' => 'public']);
+            $doctor->cover = $imagename;
+        }
+        // $doctor->is_active = $request->has('is_active');
+        $saved = $doctor->save();
+        if ($saved) {
+            session()->flash('message', 'Doctor updated successfuly');
+            return redirect()->route('doctors.index');
+        }
     }
 
     /**
@@ -109,6 +135,13 @@ class DoctorController extends Controller
      */
     public function destroy(Doctor $doctor)
     {
-        //
+        Storage::disk('public')->delete("doctors/$doctor->cover");
+        $deleted = $doctor->delete();
+        if ($deleted) {
+            session()->flash('message', 'hospital deleted successfuly');
+            return redirect()->back();
+        } else {
+            return 'error';
+        }
     }
 }

@@ -1,11 +1,11 @@
 @extends('admin.layouts')
-@section('title', 'hospitals')
+@section('title', 'admins')
 @section('content')
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title mt-2">Hospitals Table</h3>
-                <a href="{{ route('hospitals.create') }}" class="btn btn-success float-right">new hospital</a>
+                <h3 class="card-title mt-2">admins Table</h3>
+                <a href="{{ route('admins.create') }}" class="btn btn-success float-right">new admin</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -22,9 +22,7 @@
                         <tr>
                             <th style="width: 10px">#</th>
                             <th>Name</th>
-                            <th>location</th>
-                            <th>Active</th>
-                            <th>Image</th>
+                            <th>email</th>
                             <th>Create Date</th>
                             <th>Update Date</th>
                             <td>Actions</td>
@@ -35,25 +33,15 @@
                             <tr>
                                 <td>{{ $hospital->id }}</td>
                                 <td>{{ $hospital->name }}</td>
-                                <td>{{ $hospital->location }}</td>
-                                <td><span
-                                        class="badge {{ $hospital->is_active ? 'bg-success' : 'bg-danger' }}">{{ $hospital->active_status }}</span>
-                                </td>
-                                <td><img src="{{ Storage::url('hospitals/' . $hospital->cover) }}" alt="hospital image"
-                                        width="60" height="60"></td>
+                                <td>{{ $hospital->email }}</td>
                                 <td>{{ $hospital->created_at }}</td>
                                 <td>{{ $hospital->updated_at }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <div class="btn-group">
-                                            <a href="{{ route('hospitals.edit', $hospital->id) }}" class="btn btn-info"><i
+                                            <a href="{{ route('admins.edit', $hospital->id) }}" class="btn btn-info"><i
                                                     class="fas fa-edit"></i></a>
-                                            {{-- ---------------------- --}}
-                                            {{-- <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fab fa-elementor"></i></button> --}}
-                                            {{-- ------------------------------------ --}}
-                                            <form action="{{ route('hospitals.destroy', $hospital->id) }}" method="POST">
+                                            <form action="{{ route('admins.destroy', $hospital->id) }}" method="POST">
                                                 @csrf
                                                 @method('delete')
                                                 <button type="submit" class="btn btn-danger"><i

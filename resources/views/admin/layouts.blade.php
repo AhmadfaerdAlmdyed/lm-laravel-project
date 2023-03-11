@@ -16,7 +16,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('cms/plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('cms/plugins/select2/css/select2.min.css') }}">
-     <link rel="stylesheet" href="{{ asset('cms/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('cms/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('cms/plugins/toastr/toastr.min.css') }}">
     <!-- Theme style -->
@@ -233,33 +233,64 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </p>
                             </a>
                         </li>
-                          <li class="nav-item">
+                        <li class="nav-item">
                             <a href="{{ route('doctors.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
-                                   Doctors
+                                    Doctors
                                     <span class="right badge badge-danger">New</span>
                                 </p>
                             </a>
                         </li>
-                       <li class="nav-header"><h3>Settings</h3></li>
-                        </li>
-                          <li class="nav-item">
-                            <a href="{{ route('admin.logout') }}" class="nav-link">
+                         <li class="nav-item">
+                            <a href="{{ route('admins.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
-                                   Logout
+                                    Admins
+                                    <span class="right badge badge-danger">New</span>
+                                </p>
+                            </a>
+                        </li>
+                         <li class="nav-header">
+                            <h4>Roles & Permissions</h4>
+                        </li>
+                         <li class="nav-item">
+                            <a href="{{ route('roles.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Role
                                 </p>
                             </a>
                         </li>
                          <li class="nav-item">
-                            <a href="{{ route('admin.change-password') }}" class="nav-link">
+                            <a href="{{ route('permissions.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
-                                   change password
+                                    Permissions
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-header">
+                            <h4>Settings</h4>
+                        </li>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.logout') }}" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Logout
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.change-password') }}" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    change password
+                                </p>
+                            </a>
+                        </li>
+
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

@@ -1,10 +1,15 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\FrontEndController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\MajorController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\RolePermissions;
+use App\Http\Controllers\RolePermissionsController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +48,10 @@ Route::prefix('admin/')->middleware('auth')->group(function(){
     Route::resource('hospitals', HospitalController::class);
     Route::resource('majors', MajorController::class);
     Route::resource('doctors', DoctorController::class);
+    Route::resource('admins', AdminController::class);
+    Route::resource('roles', RoleController::class);
+    Route::resource('permissions', PermissionController::class);
+    Route::resource('permissions/role', RolePermissionsController::class);
     Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
     Route::get('change-password', [AuthController::class, 'changePassword'])->name('admin.change-password');
     Route::post('change-password', [AuthController::class, 'psotPassword'])->name('admin.post-change');

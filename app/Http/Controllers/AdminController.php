@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -14,7 +16,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $data = Admin::where('id' ,'!=' , auth()->id())->get();
+        return view('admin.admins.index',compact('data'));
     }
 
     /**
@@ -24,7 +27,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.admins.create');
     }
 
     /**
@@ -35,7 +38,21 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|min:3|max:40',
+            'email' => 'required|email|string|unique:admins,email',
+            'password' => 'required|string|min:6|max:15'
+        ]);
+        $admin = new Admin();
+        $admin->name = $request->get('name');
+        $admin->email = $request->get('email');
+        $admin->password = Hash::make($request->get('password'));
+        $saved = $admin->save();
+        if ($saved) {
+            session()->flash('message', 'admin created successfuly');
+            return redirect()->route('admins.index');
+        }
+        return redirect()->back();
     }
 
     /**
@@ -57,7 +74,7 @@ class AdminController extends Controller
      */
     public function edit(Admin $admin)
     {
-        //
+        return view('admin.admins.edit',compact('admin'));
     }
 
     /**
@@ -69,7 +86,18 @@ class AdminController extends Controller
      */
     public function update(Request $request, Admin $admin)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|min:3|max:40',
+            'email' => 'required|email|string|unique:admins,email',
+        ]);
+        $admin->name = $request->get('name');
+        $admin->email = $request->get('email');
+        $saved = $admin->save();
+        if ($saved) {
+            session()->flash('message', 'admin updated successfuly');
+            return redirect()->route('admins.index');
+        }
+        return redirect()->back();
     }
 
     /**
@@ -80,6 +108,12 @@ class AdminController extends Controller
      */
     public function destroy(Admin $admin)
     {
-        //
+        $deleted = $admin->delete();
+        if ($deleted) {
+            session()->flash('message', 'hospital deleted successfuly');
+            return redirect()->back();
+        } else {
+            return 'error';
+        }
     }
 }

@@ -1,11 +1,11 @@
 @extends('admin.layouts')
-@section('title', 'hospitals')
+@section('title', 'permissions')
 @section('content')
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title mt-2">Hospitals Table</h3>
-                <a href="{{ route('hospitals.create') }}" class="btn btn-success float-right">new hospital</a>
+                <h3 class="card-title mt-2">permissions Table</h3>
+                <a href="{{ route('permissions.create') }}" class="btn btn-success float-right">new admin</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -22,38 +22,26 @@
                         <tr>
                             <th style="width: 10px">#</th>
                             <th>Name</th>
-                            <th>location</th>
-                            <th>Active</th>
-                            <th>Image</th>
+                            <th>Guard</th>
                             <th>Create Date</th>
                             <th>Update Date</th>
                             <td>Actions</td>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data as $hospital)
+                        @foreach ($data as $role)
                             <tr>
-                                <td>{{ $hospital->id }}</td>
-                                <td>{{ $hospital->name }}</td>
-                                <td>{{ $hospital->location }}</td>
-                                <td><span
-                                        class="badge {{ $hospital->is_active ? 'bg-success' : 'bg-danger' }}">{{ $hospital->active_status }}</span>
-                                </td>
-                                <td><img src="{{ Storage::url('hospitals/' . $hospital->cover) }}" alt="hospital image"
-                                        width="60" height="60"></td>
-                                <td>{{ $hospital->created_at }}</td>
-                                <td>{{ $hospital->updated_at }}</td>
+                                <td>{{ $role->id }}</td>
+                                <td>{{ $role->name }}</td>
+                                <td>{{ $role->guard_name }}</td>
+                                <td>{{ $role->created_at }}</td>
+                                <td>{{ $role->updated_at }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <div class="btn-group">
-                                            <a href="{{ route('hospitals.edit', $hospital->id) }}" class="btn btn-info"><i
+                                            <a href="{{ route('permissions.edit', $role->id) }}" class="btn btn-info"><i
                                                     class="fas fa-edit"></i></a>
-                                            {{-- ---------------------- --}}
-                                            {{-- <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fab fa-elementor"></i></button> --}}
-                                            {{-- ------------------------------------ --}}
-                                            <form action="{{ route('hospitals.destroy', $hospital->id) }}" method="POST">
+                                            <form action="{{ route('permissions.destroy', $role->id) }}" method="POST">
                                                 @csrf
                                                 @method('delete')
                                                 <button type="submit" class="btn btn-danger"><i
