@@ -6,6 +6,7 @@ use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
@@ -17,9 +18,10 @@ class AdminController extends Controller
     public function index()
     {
         $data = Admin::where('id' ,'!=' , auth()->id())->get();
-        return view('admin.admins.index',compact('data'));
-    }
+        $roles = Role::all();
+        return view('admin.admins.index',compact('data', 'roles'));
 
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -27,7 +29,8 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('admin.admins.create');
+        $roles = Role::all();
+        return view('admin.admins.create',compact('roles'));
     }
 
     /**
@@ -39,15 +42,18 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'role_id' => 'required|string|exists:roles,id',
             'name' => 'required|string|min:3|max:40',
             'email' => 'required|email|string|unique:admins,email',
             'password' => 'required|string|min:6|max:15'
         ]);
+        $role = Role::where('id',$request->get('role_id'))->first();
         $admin = new Admin();
         $admin->name = $request->get('name');
         $admin->email = $request->get('email');
         $admin->password = Hash::make($request->get('password'));
         $saved = $admin->save();
+        $admin->assignRole($role);
         if ($saved) {
             session()->flash('message', 'admin created successfuly');
             return redirect()->route('admins.index');

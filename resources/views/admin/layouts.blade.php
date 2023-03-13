@@ -215,61 +215,75 @@ scratch. This page gets rid of all links and provides the needed markup only.
                with font-awesome or any other icon font library -->
 
                         {{-- Hospitals --}}
-                        <li class="nav-item">
-                            <a href="{{ route('hospitals.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Hospitals
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('majors.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Majors
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('doctors.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Doctors
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </a>
-                        </li>
-                         <li class="nav-item">
-                            <a href="{{ route('admins.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Admins
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </a>
-                        </li>
-                         <li class="nav-header">
+                        @can('index-hospitals')
+                            <li class="nav-item">
+                                <a href="{{ route('hospitals.index') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-th"></i>
+                                    <p>
+                                        Hospitals
+                                        <span class="right badge badge-danger">New</span>
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('index-majors')
+                            <li class="nav-item">
+                                <a href="{{ route('majors.index') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-th"></i>
+                                    <p>
+                                        Majors
+                                        <span class="right badge badge-danger">New</span>
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('index-doctors')
+                            <li class="nav-item">
+                                <a href="{{ route('doctors.index') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-th"></i>
+                                    <p>
+                                        Doctors
+                                        <span class="right badge badge-danger">New</span>
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('index-admins')
+                            <li class="nav-item">
+                                <a href="{{ route('admins.index') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-th"></i>
+                                    <p>
+                                        Admins
+                                        <span class="right badge badge-danger">New</span>
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
+                       @canany(['index-roles', 'index-permissions'])
+                             <li class="nav-header">
                             <h4>Roles & Permissions</h4>
                         </li>
-                         <li class="nav-item">
-                            <a href="{{ route('roles.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Role
-                                </p>
-                            </a>
-                        </li>
-                         <li class="nav-item">
-                            <a href="{{ route('permissions.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Permissions
-                                </p>
-                            </a>
-                        </li>
+                       @endcanany
+                        @can('index-roles')
+                            <li class="nav-item">
+                                <a href="{{ route('roles.index') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-th"></i>
+                                    <p>
+                                        Role
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('index-permissions')
+                            <li class="nav-item">
+                                <a href="{{ route('permissions.index') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-th"></i>
+                                    <p>
+                                        Permissions
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
                         <li class="nav-header">
                             <h4>Settings</h4>
                         </li>

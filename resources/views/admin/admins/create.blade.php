@@ -20,6 +20,16 @@
                             @endforeach
                         </div>
                     @endif
+                      <div class="form-group" data-select2-id="34">
+                        <label>select Role</label>
+                        <select class="form-control select2 select2-danger select2-hidden-accessible"
+                            data-dropdown-css-class="select2-info" style="width: 100%;" data-select2-id="11" tabindex="-1"
+                            aria-hidden="true" name="role_id">
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Enter name</label>
                         <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="name"

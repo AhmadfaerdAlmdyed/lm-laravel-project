@@ -1,11 +1,11 @@
 @extends('admin.layouts')
-@section('title', 'roles')
+@section('title', 'admins')
 @section('content')
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title mt-2">roles Table</h3>
-                <a href="{{ route('roles.create') }}" class="btn btn-success float-right">new admin</a>
+                <h3 class="card-title mt-2">Role Permissions Table</h3>
+
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -22,38 +22,31 @@
                         <tr>
                             <th style="width: 10px">#</th>
                             <th>Name</th>
-                            <th>Guard</th>
-                            <th>Role Permissions</th>
-                            <th>Create Date</th>
-                            <th>Update Date</th>
-                            <td>Actions</td>
+                            <th>Gaurd</th>
+                            <th>Assigned</th>
+
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data as $role)
+                        @foreach ($permissions as $permission)
                             <tr>
-                                <td>{{ $role->id }}</td>
-                                <td>{{ $role->name }}</td>
-                                <td>{{ $role->guard_name }}</td>
-                                <td><a href="{{ route('role.show',$role->id) }}" class="btn btn-block btn-secondary btn-sm">Permissions
-                                       ( {{ count($role->permissions) }})</a></td>
-                                <td>{{ $role->created_at }}</td>
-                                <td>{{ $role->updated_at }}</td>
+                                <td>{{ $permission->id }}</td>
+                                <td>{{ $permission->name }}</td>
+                                <td>{{ $permission->guard_name }}</td>
                                 <td>
-                                    <div class="btn-group">
-                                        <div class="btn-group">
-                                            <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-info"><i
-                                                    class="fas fa-edit"></i></a>
-                                            <form action="{{ route('roles.destroy', $role->id) }}" method="POST">
-                                                @csrf
-                                                @method('delete')
-                                                <button type="submit" class="btn btn-danger"><i
-                                                        class="fas fa-trash"></i></button>
-                                            </form>
-                                        </div>
-
+                                    <div class="form-check">
+                                        <input onclick="assign('{{ $role->id }}','{{ $permission->id }}')"
+                                         class="form-check-input"
+                                          type="checkbox"
+                                          id="permission_{{ $permission->id}}"
+                                          @if($permission->assign) checked @endif
+                                          >
+                                        <label
+                                        for="permission_{{ $permission->id}}"
+                                         class="form-check-label">Assigned</label>
                                     </div>
                                 </td>
+
                             </tr>
                         @endforeach
 
@@ -74,3 +67,16 @@
         </div>
     </div>
 @endsection
+<script>
+    function assign(roleId , permissionId){
+        axios.post('/admin/permissions/role',{
+            role_id:roleId,
+            permission_id : permissionId
+        }).then(function(response){
+            console.log(response.data);
+            toastr.success(response.data.message)
+        }).catch(function(error){
+            toastr.error(error.response.data.message)
+        })
+    }
+</script>
