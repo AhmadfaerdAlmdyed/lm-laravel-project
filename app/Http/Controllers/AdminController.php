@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\HellowEvent;
+use App\Mail\WellcomeMAil;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use PHPUnit\TextUI\Help;
 use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
@@ -53,6 +57,10 @@ class AdminController extends Controller
         $admin->email = $request->get('email');
         $admin->password = Hash::make($request->get('password'));
         $saved = $admin->save();
+        // Mail::to("yahya@gmail.com")->send(new WellcomeMAil());
+
+        // event(new HellowEvent($admin));
+        // event('deleteEVEnt');
         $admin->assignRole($role);
         if ($saved) {
             session()->flash('message', 'admin created successfuly');

@@ -38,9 +38,10 @@ class MajorController extends Controller
      */
     public function store(Request $request)
     {
+
         $Validator = Validator($request->all(), [
             'name' => 'required|string',
-            'is_active' => 'in:true,flase|string',
+            'is_active' => 'required|in:true,false|string',
             'cover' => 'nullable|image|mimes:jpg,png'
         ]);
         if (!$Validator->fails()) {
@@ -52,7 +53,7 @@ class MajorController extends Controller
                 $request->file('cover')->storePubliclyAs('majors', $imagename, ['disk' => 'public']);
                 $major->cover = $imagename;
             }
-            $major->is_active = $request->has('is_active');
+            $major->is_active = $request->get('is_active');
             $saved = $major->save();
             return response()->json([
                     'message' => $saved ? 'Major created successfully' : 'Fail creating major'
@@ -98,7 +99,7 @@ class MajorController extends Controller
     {
         $Validator = Validator($request->all(), [
             'name' => 'required|string',
-            'is_active' => 'in:true,flase|string',
+            'is_active' => 'required|in:true,false|string',
             'cover' => 'nullable|image|mimes:jpg,png'
         ]);
         if (!$Validator->fails()) {
@@ -109,11 +110,12 @@ class MajorController extends Controller
                 $request->file('cover')->storePubliclyAs('majors', $imagename, ['disk' => 'public']);
                 $major->cover = $imagename;
             }
-            $major->is_active = $request->has('is_active');
+            $major->is_active = $request->get('is_active');
             $saved = $major->save();
             return response()->json(
                 [
-                    'message' => $saved ? 'Major updated successfully' : 'Fail updating major'
+                    'message' => $saved ? 'Major updated successfully' : 'Fail updating major',
+                    'data' => $major
                 ],
                 $saved ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST
             );

@@ -17,7 +17,7 @@ class CreateMajorsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('cover')->nullable();
-            $table->boolean('is_active');
+            $table->string('is_active')->default(true);
             $table->timestamps();
         });
     }

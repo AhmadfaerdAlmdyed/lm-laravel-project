@@ -27,7 +27,7 @@
                     </div>
                     <div class="form-group">
                         <div class="custom-control custom-switch">
-                            <input type="checkbox" name="is_active" class="custom-control-input" id="customSwitch1" checked>
+                            <input type="checkbox" class="custom-control-input" id="customSwitch1" checked name="is_active">
                             <label class="custom-control-label" for="customSwitch1">Activate</label>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <a  onclick="storeItem('/admin/majors/')" class="btn btn-primary">Submit</a>
+                    <a  onclick="storeItem('/admin/majors')" class="btn btn-primary">Submit</a>
                 </div>
             </form>
         </div>
@@ -50,13 +50,14 @@
     if(document.getElementById('cover').files[0] != undefined){
         formData.append('cover' ,document.getElementById('cover').files[0]);
     }
-    formData.append('is_active' ,document.getElementById('customSwitch1').checked);
+        formData.append('is_active' ,document.getElementById('customSwitch1').checked);
+
     axios.post(url ,formData)
     .then(function(response){
         toastr.success(response.data.message)
+         console.log(response.data)
         document.getElementById('form-rest').reset()
         // window.location.href = '/majors'
-        console.log(response.data)
     }).catch(function(error){
         console.log(error.response.data.message)
         toastr.error(error.response.data.message)

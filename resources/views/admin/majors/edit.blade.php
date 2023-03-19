@@ -28,7 +28,7 @@
                     <div class="form-group">
                         <div class="custom-control custom-switch">
                             <input type="checkbox" name="is_active" class="custom-control-input" id="customSwitch1"
-                                @if ($major->is_active) checked @endif>
+                                @if ($major->is_active == 'true') checked @endif>
                             <label class="custom-control-label" for="customSwitch1">Activate</label>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button onclick="updateItem({{ $major->id }})" class="btn btn-primary">Submit</button>
+                    <button type="button" onclick="updateItem({{ $major->id }})" class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>
@@ -55,8 +55,9 @@
             axios.post('/admin/majors/'+id, formData)
                 .then(function(response) {
                     toastr.success(response.data.message)
+                     console.log(response.data)
                     window.location.href = '/admin/majors'
-                    console.log(response.data)
+
                 }).catch(function(error) {
                     console.log(error.response.data.message)
                     toastr.error(error.response.data.message)

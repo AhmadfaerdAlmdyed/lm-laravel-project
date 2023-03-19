@@ -31,7 +31,7 @@
                             <tr>
                                 <td>{{ $major->id }}</td>
                                 <td>{{ $major->name }}</td>
-                                <td>{{ $major->is_active ? 'active' : 'non active' }}</td>
+                                <td>{{ $major->is_active == 'true' ? 'active' : 'non active' }}</td>
                                 <td><img src="{{ Storage::url('majors/' . $major->cover) }}" alt="major image"
                                         width="60" height="60"></td>
                                 <td>{{ $major->created_at }}</td>

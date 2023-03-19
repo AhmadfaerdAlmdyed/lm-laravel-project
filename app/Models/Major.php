@@ -11,4 +11,8 @@ class Major extends Model
     public function hospitals(){
         return $this->belongsToMany(Hospital::class);
     }
+    public function getActiveStatusAttribute()
+    {
+        return $this->active ? 'فعال' : 'غير فعال';
+    }
 }
